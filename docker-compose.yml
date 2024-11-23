@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  app:
+    image: 'sokoldaniil/nginx-with-geoip2:0.0.2'
+    container_name: NGINX_SOC
+    environment:
+      PUID: 1003
+      PGID: 1003
+    restart: always
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./modules/GeoIP2/GeoLite2-Country.mmdb:/usr/share/GeoIP/GeoLite2-Country.mmdb
+      - ./modules/http_basic_authentication/http_basic_authentication/.htpasswd:/etc/nginx/.htpasswd
+      - ./configs/nginx.conf:/etc/nginx/nginx.conf
+      - ./letsencrypt:/etc/letsencrypt
